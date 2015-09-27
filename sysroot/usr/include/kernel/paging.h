@@ -1,0 +1,1 @@
+unsigned long *page_directory = (unsigned long *) 0x9C000;
