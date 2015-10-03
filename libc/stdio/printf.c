@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void print(const char* data, size_t data_length)
@@ -15,6 +16,7 @@ int printf(const char* restrict format, ...)
 	va_start(parameters, format);
 
 	int written = 0;
+	unsigned int uival;
 	size_t amount;
 	bool rejected_bad_specifier = false;
 
@@ -55,6 +57,16 @@ int printf(const char* restrict format, ...)
 		{
 			format++;
 			const char* s = va_arg(parameters, const char*);
+			print(s, strlen(s));
+		}
+		else if(*format == 'p')
+		{
+			char * prefix = "0x";
+			format++;
+			uival = va_arg(parameters, unsigned long);
+			char  s[16];
+			itoa(uival,s, 16);
+			print(prefix, strlen(prefix));
 			print(s, strlen(s));
 		}
 		else
